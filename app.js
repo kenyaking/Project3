@@ -6,17 +6,38 @@ const path = require("path");
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, "../client/build")));
+if (process.env.NODE_ENV === 'production'){
+  //First check to see if there is a specific file which Express can match in the client build.
+  //To make Express serve up production assets like main.js or main.css files
+  app.use(express.static('client/build'));
 
-//connect to mongodb
+  //If someone makes a request for a route that express does not understand
+  //then make Express serve up the index.html file
+  app.get('*',(req,res)=>{
+    res.sendFile(path.resolve(__dirname,'client','build','index.html'));
+  })
 
-const mongoURI =
+}
+
+//app.use(express.static(path.join(__dirname, "../client/build")));
+
+//connect to mongodb if we are running the project locally
+if (process.env.NODE_ENV !== 'production'){
+  const mongoURI =
   process.env.MONGODB_URI || "mongodb://localhost:27017/googlequiz";
 mongoose
   .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(res => {
     console.log("mongodb connected");
   });
+}else{
+  //if we are running on heroku, then we should connect to mlab
+  mongoose.connect('',{useNewUrlParser:true,useUnifiedTopology:true})
+  .then(res => {
+    console.log("mongodb connected");
+  });
+}
+
 
 app.use(bodyParser.json());
 
