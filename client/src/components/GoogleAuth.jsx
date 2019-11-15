@@ -11,7 +11,7 @@ class GoogleAuth extends React.Component{
         window.gapi.load('client:auth2',()=>{
             //once the auth script is loaded, we initialize for our client id updated 
             window.gapi.client.init({
-                clientId:'1055535514945-crbe26ih712ei4k2p5h6u7podlfuf0mi.apps.googleusercontent.com',
+                clientId:'3407753133-e3et1npm884lr3limcsfmb2e9qc4snmg.apps.googleusercontent.com',
                 scope:'email'
             }).then(()=>{
                 //once the client is initialized, we check if user is signed in or not
@@ -33,11 +33,12 @@ class GoogleAuth extends React.Component{
 
     onSignOut = ()=>{
         this.auth.signOut();
-        window.location.href="http://localhost:3000";
+        window.location.href="https://kenyaquiz.herokuapp.com/";
     }
 
     onAuthChange =()=>{
         this.setState({isSignedIn:this.auth.isSignedIn.get()})
+    
     }
 
 
