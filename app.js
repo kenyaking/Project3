@@ -32,7 +32,7 @@ mongoose
   });
 }else{
   //if we are running on heroku, then we should connect to mlab
-  mongoose.connect('',{useNewUrlParser:true,useUnifiedTopology:true})
+  mongoose.connect('mongodb+srv://kenya:kenya@cluster0-vsnpo.mongodb.net/test?retryWrites=true&w=majority',{useNewUrlParser:true,useUnifiedTopology:true})
   .then(res => {
     console.log("mongodb connected");
   });
